@@ -1,6 +1,6 @@
 
 searchUrl = "https://www.coupang.com/np/search"
-query = URLencode(iconv("³ëÆ®ºÏ", "euc-kr","UTF-8"))
+query = URLencode(iconv("ë…¸íŠ¸ë¶", "euc-kr","UTF-8"))
 url = paste(searchUrl,"?q=",query,sep="")
 
 
@@ -12,7 +12,7 @@ name = html_text(namenodes)
 pricenodes = html_nodes(content, ".price-value")
 
 price = html_text(pricenodes)
-pointnodes = html_nodes(content, ".rating") # µî±Ş °¡Á®¿À±â.
+pointnodes = html_nodes(content, ".rating") 
 
 point = html_text(pointnodes)
 page = cbind(name, price)
@@ -20,8 +20,6 @@ page = cbind(name, price)
 page = cbind(page, point)
 
 page
-
-#¿©±â±îÁö°¡ ³ëÆ®ºÏ¿¡ ´ëÇÑ ÄíÆÎ ÀÚ·á ±Ü¾î¿À±â. 
 
 price
 
@@ -31,7 +29,7 @@ coupang <- NULL
 
 for(i in 1:10){
   
-  url2 <- paste(url, i, sep="") #ÆäÀÌÁö ¼ö°¡ ¹Ù²ñ.
+  url2 <- paste(url, i, sep="")
   content <- read_html(url)
   
   namenodes <- html_nodes(content, ".name")
@@ -51,15 +49,12 @@ for(i in 1:10){
   
 } 
 
-#¿©±â±îÁö°¡ ÆäÀÌÁö¿¡ ´ëÇÑ ³ëÆ®ºÏ ÀüºÎ ±Ü¾î¿À´Â°Å 
-# ÀÌÁ¦ ºÎÅÍ °¡°İÀÇ ÀÚ·áÇüÀ» ¹Ù²Ù´Â°Å¤ÓÁö
-
 coupang
 
 price<-coupang[,2]
 
 price1=gsub(pattern = ",", replacement = "", x = price)
-price2 <- as.numeric(price1) # ÀÌ¶§ ¿À·ù³ª´Âµ¥ ÀÌÀ¯´Â ½°Ç¥¶§¹®.
+price2 <- as.numeric(price1) # ì´ë•Œ ì˜¤ë¥˜ë‚˜ëŠ”ë° ì´ìœ ëŠ” ì‰¼í‘œë•Œë¬¸.
 
 #####
 
@@ -85,7 +80,7 @@ f1<-nrow(f)
 g1<-nrow(g)
 
 ###########
-#¿©±â¼­ºÎÅÍ°¡ Â÷Æ®
+
 
 install.packages("graphics")
 library(graphics)
@@ -93,18 +88,18 @@ library(graphics)
 
 par(mfrow=c(1,2), mar=c(7,5,4,4))
 height=c(g1,f1,e1,d1,c1,b1,a1)
-name=c("10¸¸¿øÀÌ»ó","30¸¸¿øÀÌ»ó","50¸¸¿øÀÌ»ó","70¸¸¿øÀÌ»ó","100¸¸¿øÀÌ»ó","150¸¸¿øÀÌ»ó","200¸¸¿øÀÌ»ó" )
+name=c("10ë§Œì›ì´ìƒ","30ë§Œì›ì´ìƒ","50ë§Œì›ì´ìƒ","70ë§Œì›ì´ìƒ","100ë§Œì›ì´ìƒ","150ë§Œì›ì´ìƒ","200ë§Œì›ì´ìƒ" )
 
 
-bp= barplot(height, main ="³ëÆ®ºÏ°¡°İºĞÆ÷",names.arg=name, col=rainbow(length(height)), 
-            xlab="°¡°İ",ylab="³ëÆ®ºÏ°³¼ö", ylim=c(0,150))
+bp= barplot(height, main ="ë…¸íŠ¸ë¶ê°€ê²©ë¶„í¬",names.arg=name, col=rainbow(length(height)), 
+            xlab="ê°€ê²©",ylab="ë…¸íŠ¸ë¶ê°œìˆ˜", ylim=c(0,150))
 
-text(x=bp, y=height, labels=round(height,0), pos=3) #±×·¡ÇÁ À§¿¡ 
+text(x=bp, y=height, labels=round(height,0), pos=3) 
 
 
 
-barplot(height, main ="³ëÆ®ºÏ°¡°İºĞÆ÷",names.arg=name, col=rainbow(length(height)), 
-        xlab="°¡°İ",ylab="³ëÆ®ºÏ°³¼ö", horiz= TRUE, width=50, xlim=c(0,150)) # ±×·¡ÇÁ °¡·Î·Î ¸¸µé±â
+barplot(height, main ="ë…¸íŠ¸ë¶ê°€ê²©ë¶„í¬",names.arg=name, col=rainbow(length(height)), 
+        xlab="ê°€ê²©",ylab="ë…¸íŠ¸ë¶ê°œìˆ˜", horiz= TRUE, width=50, xlim=c(0,150)) 
 
 
 max(price2)
